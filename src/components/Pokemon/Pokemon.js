@@ -23,7 +23,7 @@ function Pokemon({name}) {
     }, [name])
 
     return (
-        <div>
+        <div className="pokemon-card">
             {pokemon && <>
                 <h3>{pokemon.name}</h3>
                 <img src={pokemon.sprites.front_default} alt={pokemon.name}/>
@@ -38,7 +38,7 @@ function Pokemon({name}) {
                 <ul>
                     {pokemon.abilities.map((a) => {
                         return (
-                            <li key={a.ability.name}>
+                            <li key={a.ability.name} className="ability-list">
                                 {a.ability.name}
                             </li>
                         )})}

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import './App.css';
 import Pokemon from "./components/Pokemon/Pokemon";
+import Button from "./components/Button/Button";
 
 function App() {
   const [page, setPage] = useState(`https://pokeapi.co/api/v2/pokemon`);
@@ -25,33 +26,29 @@ function App() {
   }, [page])
 
   return (
-      <>
-          <header>
-              <h1>Pokémon</h1>
-          </header>
-
-          <div>
-              <button
+      <main>
+          <div className="buttons">
+              <Button
                 type="button"
-                onClick={() => setPage(pokemon.previous)}
-              >
-                  Vorige
-              </button>
+                disabled={pokemon && !pokemon.previous}
+                action={() => setPage(pokemon.previous)}
+                text="Previous"
+              />
 
-              <button
-                type="button"
-                onClick={() => setPage(pokemon.next)}
-              >
-                  Volgende
-              </button>
+              <Button
+                  type="button"
+                  disabled={pokemon && !pokemon.next}
+                  action={() => setPage(pokemon.next)}
+                  text="Next"
+              />
           </div>
 
-          <div>
+          <div className="pokemon">
               {pokemon && pokemon.results.map((card) => {
                   return <Pokemon name={card.name}/>
               })}
           </div>
-      </>
+      </main>
   );
 }
 
