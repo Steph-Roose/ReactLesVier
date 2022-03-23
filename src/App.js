@@ -4,27 +4,17 @@ import './App.css';
 import Pokemon from "./components/Pokemon/Pokemon";
 
 function App() {
-  const [page, setPage] = useState(0);
-
-  const mainPage = 0;
-  const lastPage = 57;
-
-  function previousPage() {
-      setPage(page - 20);
-  }
-
-  function nextPage() {
-      setPage(page + 20);
-  }
+  const [page, setPage] = useState(`https://pokeapi.co/api/v2/pokemon`);
+  const [pokemon, setPokemon] = useState();
 
   useEffect(() => {
     async function fetchData() {
         try {
-            const result = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=${page}&limit=20`)
+            const result = await axios.get(`${page}`)
 
             console.log(result.data);
 
-            setPage(result.data)
+            setPokemon(result.data)
 
         } catch (e) {
             console.error(e);
@@ -32,7 +22,7 @@ function App() {
     }
     fetchData();
 
-  }, [])
+  }, [page])
 
   return (
       <>
@@ -43,28 +33,22 @@ function App() {
           <div>
               <button
                 type="button"
-                disabled={page === mainPage}
-                onClick={previousPage}
+                onClick={() => setPage(pokemon.previous)}
               >
                   Vorige
               </button>
 
               <button
                 type="button"
-                disabled={page === lastPage}
-                onClick={nextPage}
+                onClick={() => setPage(pokemon.next)}
               >
                   Volgende
               </button>
           </div>
 
           <div>
-              {page && page.results.map((card) => {
-                  return (
-                      <article key={card.name}>
-                        <Pokemon name={card.name}/>
-                      </article>
-                  )
+              {pokemon && pokemon.results.map((card) => {
+                  return <Pokemon name={card.name}/>
               })}
           </div>
       </>
