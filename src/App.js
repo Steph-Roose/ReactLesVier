@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import './App.css';
-import Button from "./components/Button/Button";
 import Pokemon from "./components/Pokemon/Pokemon";
 
 function App() {
-  const [page, setPage] = useState(null);
+  const [page, setPage] = useState(0);
+
+  const mainPage = 0;
+  const lastPage = 57;
 
   function previousPage() {
       setPage(page - 20);
@@ -39,19 +41,21 @@ function App() {
           </header>
 
           <div>
-              <Button
+              <button
                 type="button"
-                disabled={page === 0}
-                action={previousPage}
-                text="Vorige"
-              />
+                disabled={page === mainPage}
+                onClick={previousPage}
+              >
+                  Vorige
+              </button>
 
-              <Button
+              <button
                 type="button"
-                disabled={page === 57}
-                action={nextPage}
-                text="Volgende"
-              />
+                disabled={page === lastPage}
+                onClick={nextPage}
+              >
+                  Volgende
+              </button>
           </div>
 
           <div>
